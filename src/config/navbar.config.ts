@@ -10,6 +10,10 @@ export const navbarConfig: NavItem[] = [
     url: "/letters",
   },
   {
+    title: "Series",
+    url: "/posts",
+  },
+  {
     title: "Experience",
     url: "/experience",
   },
