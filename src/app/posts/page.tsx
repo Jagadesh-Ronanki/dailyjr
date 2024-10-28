@@ -3,8 +3,6 @@ import BlogCard from "@/components/blog/blog-card";
 import Hero from "@/components/hero";
 import Navbar from "@/components/navbar";
 import PostCard from "@/components/post/post-card";
-import { PostSeries } from "@/components/post/post-series";
-import SeriesDropdown from "@/components/post/series-dropdown";
 
 export default function PostSection() {
   const sortedPosts = posts.sort((a, b) => {

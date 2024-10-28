@@ -1,6 +1,5 @@
 "use client";
 
-import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "@/lib/constants";
 import { posts as allPosts } from "#site/content";
 import { PostSeries } from "./post-series"; 
 
@@ -19,7 +18,7 @@ export default function SeriesDropdown({
   currentSlug?: string;
 }) {
   // Group posts by series title
-  const seriesList = allPosts.reduce((acc, post) => {
+  const seriesList = allPosts.reduce((acc: any, post: any) => {
     if (post.series) {
       const seriesTitle = post.series.title;
 
@@ -36,7 +35,7 @@ export default function SeriesDropdown({
         slug: post.slug,
         title: post.title,
         status: post.status,
-        isCurrent: post.slug === currentSlug,
+        isCurrent: post.slug === "posts/" + currentSlug,
       });
     }
     return acc;

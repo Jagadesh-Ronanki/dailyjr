@@ -141,6 +141,7 @@ export default function PostPage({ params }: PostPageProps) {
           className="relative w-full lg:h-full lg:w-3/5 p-2 md:p-8 overflow-y-scroll"
         >
           <MDXContentRenderer code={post.body} />
+          <SeriesDropdown title={post.series?.title} isInteractive={false} currentSlug={post.slugAsParams} />
         </div>
       </div>
     </main>

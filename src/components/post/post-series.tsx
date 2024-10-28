@@ -34,7 +34,6 @@ export const PostSeries = ({
 }) => {
   const [isOpen, setIsOpen] = React.useState(!isInteractive);
   const currentIndex = seriesData.posts.findIndex((post) => post.isCurrent) + 1;
-  console.log(currentIndex)
 
   return (
     <div className={`text-[#eef2ff] head-text-sm rounded-2xl bg-black/80 border-[0.3px] text-xs p-5 shadow-surface-elevation-low lg:px-6 mb-8 transition-all ${!isInteractive ? 'mt-8' : ''}`}>
