@@ -94,13 +94,13 @@ export const projects = defineCollection({
 
 //----------------------
 // Define the Series schema
-const Series = s.object({
+export const Series = s.object({
   title: s.string(),
   order: s.number(),
 }).optional();
 
 // Define the Tag schema
-const Tag = s.object({
+export const Tag = s.object({
   title: s.enum(allTagNames),
   slug: s.enum(allTagSlugs),
 }).optional();
@@ -117,7 +117,9 @@ export const posts = defineCollection({
       description: s.string().max(999).optional(),
       status: s.enum(["draft", "published"]),
       series: Series,
-      tags: Tag,
+      tags: s.array(Tag),
+      image: s.image(),
+      imageDark: s.image(),
       body: s.mdx(),
     })
     .transform(computedFields),

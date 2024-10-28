@@ -1,4 +1,4 @@
-import { projects } from "#site/content";
+import { posts } from "#site/content";
 import { MDXContentRenderer } from "@/components/mdx/mdx-content-renderer";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -9,75 +9,75 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/config/site.config";
 import SeriesDropdown from "@/components/post/series-dropdown";
 
-type ProjectPageProps = {
+type PostPageProps = {
   params: {
     slug: string;
   };
 };
 
-function getProjectFromParam(params: { slug: string }) {
+function getPostFromParam(params: { slug: string }) {
   const slug = params.slug;
-  const project = projects.find((project) => project.slugAsParams === slug);
+  const post = posts.find((post) => post.slugAsParams === slug);
 
-  if (!project) {
+  if (!post) {
     null;
   }
-  return project;
+  return post;
 }
 
 export async function generateMetadata({
   params,
-}: ProjectPageProps): Promise<Metadata> {
-  const project = getProjectFromParam(params);
+}: PostPageProps): Promise<Metadata> {
+  const post = getPostFromParam(params);
 
-  if (!project) {
+  if (!post) {
     return {};
   }
 
-  const ogUrl = new URL(`${siteConfig.siteUrl}${project.image.src}`);
-  ogUrl.searchParams.set("heading", project.title);
+  const ogUrl = new URL(`${siteConfig.siteUrl}${post.image.src}`);
+  ogUrl.searchParams.set("heading", post.title);
   ogUrl.searchParams.set("type", "Blog Post");
   ogUrl.searchParams.set("mode", "dark");
 
   return {
-    title: `${project.title} | ${siteConfig.name} | ${siteConfig.creator.name}`,
-    description: project.description,
-    keywords: [...project.tags, ...siteConfig.keywords, project.title],
+    title: `${post.title} | ${siteConfig.name} | ${siteConfig.creator.name}`,
+    description: post.description,
+    keywords: [...post.tags.map((tag) => tag?.title!), ...siteConfig.keywords, post.title],
     openGraph: {
-      title: `${project.title} | ${siteConfig.name} | ${siteConfig.creator.name}`,
-      description: project.description,
+      title: `${post.title} | ${siteConfig.name} | ${siteConfig.creator.name}`,
+      description: post.description,
       type: "article",
-      url: `${siteConfig.siteUrl}/projects/${project.slugAsParams}`,
+      url: `${siteConfig.siteUrl}/posts/${post.slugAsParams}`,
       images: [
         {
           url: ogUrl.toString(),
           width: 1200,
           height: 630,
-          alt: project.title,
+          alt: post.title,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} | ${siteConfig.name}`,
-      description: project.description,
+      title: `${post.title} | ${siteConfig.name}`,
+      description: post.description,
       images: [ogUrl.toString()],
     },
   };
 }
 
 export async function generateStaticParams(): Promise<
-  ProjectPageProps["params"][]
+  PostPageProps["params"][]
 > {
-  return projects.map((project) => ({
-    slug: project.slugAsParams,
+  return posts.map((post) => ({
+    slug: post.slugAsParams,
   }));
 }
 
-export default function ProjectPage({ params }: ProjectPageProps) {
-  const project = getProjectFromParam(params);
+export default function PostPage({ params }: PostPageProps) {
+  const post = getPostFromParam(params);
 
-  if (!project) {
+  if (!post) {
     notFound();
   }
 
@@ -94,21 +94,21 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               <span className="sr-only">rdsx.dev</span>
             </Link>
             <p className="px-2 py-1 text-xs rounded bg-secondary">
-              {new Date(project.date).toDateString()}
+              {new Date(post.publishedAt).toDateString()}
             </p>
           </div>
           <Picture
-            image={project.image}
-            imageDark={project.imageDark}
+            image={post.image}
+            imageDark={post.imageDark}
             width={600}
             height={400}
-            alt={project.title}
+            alt={post.title}
             className="border rounded-xl mx-auto"
           />
-          <h1 className="head-text-sm py-1 mt-6 mb-4">{project.title}</h1>
+          <h1 className="head-text-sm py-1 mt-6 mb-4">{post.title}</h1>
           <div className="mb-8">
-            <div className="flex flex-wrap items-center gap-2 mb-4">
-              {project.links.map((link, i) => (
+            {/* <div className="flex flex-wrap items-center gap-2 mb-4">
+              {post.links.map((link, i) => (
                 <a
                   key={i}
                   href={link.url}
@@ -121,25 +121,27 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                   </span>
                 </a>
               ))}
-            </div>
+            </div> */}
             <div className="flex flex-wrap items-center gap-2">
-              {project.tags.map((tag) => (
-                <p
-                  key={tag}
-                  className="text-xs p-1 rounded bg-secondary cursor-pointer"
-                >
-                  {tag}
-                </p>
-              ))}
+            {post.tags && post.tags.map((tag) => (
+              <p
+                key={tag?.slug}
+                className="text-xs p-1 rounded bg-secondary cursor-pointer"
+              >
+                {tag?.title}
+              </p>
+            ))}
             </div>
           </div>
-          <p className="rounded mb-4">{project.description}</p>
+          <SeriesDropdown title={post.series?.title} isInteractive={true} currentSlug={post.slugAsParams} />
+          <p className="rounded mb-4">{post.description}</p>
         </div>
         <div
           id="tab-section"
           className="relative w-full lg:h-full lg:w-3/5 p-2 md:p-8 overflow-y-scroll"
         >
-          <MDXContentRenderer code={project.body} />
+          <MDXContentRenderer code={post.body} />
+          <SeriesDropdown title={post.series?.title} isInteractive={false} currentSlug={post.slugAsParams} />
         </div>
       </div>
     </main>

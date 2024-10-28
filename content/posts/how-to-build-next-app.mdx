@@ -1,0 +1,200 @@
+---
+title: "How to build new next app"
+description: "Leverage VS Code's ecosystem to generate highly accurate syntax highlighting at build time. With zero performance cost and access to the entire VS Code theme catalog."
+publishedAt: "2022-08-24"
+status: "draft"
+tags:
+  - title: "Next.js"
+    slug: "next"
+  - title: "MDX"
+    slug: "mdx"
+image: "../letters/assets/can-you-build-next-multi-billion-dollar-startup/startup.png"
+imageDark: "../letters/assets/can-you-build-next-multi-billion-dollar-startup/startup-dark.png"
+series:
+  order: 1
+  title: "Build a Developer Blog with Next.js"
+---
+
+If you're writing about code, your blog probably needs...
+
+- **Syntax highlighting** so your code blocks are easier for readers to parse
+- **Line numbers** so you can reference the code you're discussing
+- **Line highlighting** so you can draw attention to specific parts of code
+- **Block titles** so you can add additional context
+- You'd probably want colors that matched your website, right? What if you could use absolutely any **VS Code theme**?
+- Oh, and you'll need **light and dark mode** of course, because of reasons
+- And wouldn't it be great if you could do this _without_ any **runtime performance costs**?
+
+Sound good? Let's get started.
+
+# Example
+
+Here is an example of what we will be creating today:
+
+```tsx showLineNumbers title="pages/blog/[slug].tsx" {5,12,20}
+import { allPosts, type Post } from "contentlayer/generated"
+import { type GetStaticProps, type InferGetStaticPropsType } from "next"
+
+export const getStaticPaths = () => ({
+  paths: allPosts.map((post) => ({ params: { slug: post.slug } })),
+  fallback: false,
+})
+
+export const getStaticProps: GetStaticProps<{
+  post: Post
+}> = ({ params }) => ({
+  props: { post: allPosts.find((post) => post.slug === params?.slug) },
+})
+
+export default function SinglePostPage(
+  props: InferGetStaticPropsType<typeof getStaticProps>,
+) {
+  return (
+    <div>
+      <h1>{props.post.title}</h1>
+    </div>
+  )
+}
+```
+
+# How It Works
+
+As discussed in a previous [post](/blog/next-blog-structured-mdx-content-with-contentlayer), we're using Contentlayer to integrate MDX and manage our content. Today we'll use the [Pretty Code plugin](https://github.com/atomiks/rehype-pretty-code) to add syntax highlighting to code blocks in our markdown posts.
+
+Here is how it works:
+
+- At build time, Contentlayer transforms our markdown content into JSX. We can intercept this process and apply additional transformations using plugins.
+- The Pretty Code plugin searches markdown for code blocks, leverages VS Codes syntax highlighting engine to evaluate the code, and adds an inline style to each token based on the selected VS Code theme.
+- React and Next.js render the JSX and generate a static HTML version, ready to be served to the user.
+
+Before syntax highlighting:
+
+```txt
+const multiply = (a, b) => a * b
+```
+
+After syntax highlighting:
+
+```js
+const multiply = (a, b) => a * b
+```
+
+The code block above generates the following HTML:
+
+```html
+<div>
+  <pre>
+    <code>
+      <span class="line">
+        <span style="color:#C678DD">const</span>
+        <span style="color:#ABB2BF"> </span>
+        <span style="color:#61AFEF">multiply</span>
+        <span style="color:#ABB2BF"> </span>
+        <span style="color:#56B6C2">=</span>
+        <span style="color:#ABB2BF"> (</span>
+        <span style="color:#E06C75;font-style:italic">a</span>
+        <span style="color:#ABB2BF">, </span>
+        <span style="color:#E06C75;font-style:italic">b</span>
+        <span style="color:#ABB2BF">) </span>
+        <span style="color:#C678DD">=&gt;</span>
+        <span style="color:#ABB2BF"> </span>
+        <span style="color:#E06C75">a</span>
+        <span style="color:#ABB2BF"> </span>
+        <span style="color:#56B6C2">*</span>
+        <span style="color:#ABB2BF"> </span>
+        <span style="color:#E06C75">b</span>
+      </span>
+    </code>
+  </pre>
+</div>
+```
+
+# Why Is This a Big Deal?
+
+- Leveraging VS Code's ecosystem means highly accurate syntax highlighting and access to the entire VS Code theme catalog.
+- Generating the exact syntax colors at build-time means no runtime performance cost because there isn't any additional JavaScript or large CSS files sent to the client.
+  - Methods that evaluate syntax and generate styles at runtime increase the JavaScript client-side bundle, produce flashes of unstyled code, and slow down the user's device.
+  - Methods that use static CSS files either produce large files because they have to account for every possible language or have inaccurate highlighting because they rely on token pattern matching.
+
+# Install Pretty Code
+
+- Install Pretty Code and its dependencies
+
+```bash title="Terminal"
+npm install rehype-pretty-code shiki
+```
+
+# Setup Pretty Code and Contentlayer
+
+- Add Pretty Code to the list of rehype plugins for MDX files.
+
+```js showLineNumbers title="./contentlayer.config.js" {9}
+import { makeSource } from "contentlayer/source-files"
+import rehypePrettyCode from "rehype-pretty-code"
+import { Post } from "./content/definitions/Post"
+
+export default makeSource({
+  contentDirPath: "content",
+  documentTypes: [Post],
+  mdx: {
+    rehypePlugins: [rehypePrettyCode],
+  },
+})
+```
+
+# Create a Code Block
+
+Let's create a post to preview our progress so far.
+
+
+````md showLineNumbers title="./content/posts/syntax-highlighting.mdx" {5-7}
+# Code Block
+
+This is my first code block:
+
+```js
+const multiply = (a, b) => a * b
+```
+````
+
+- Create a fenced code block in markdown by wrapping code in three backticks
+- Add a language annotation e.g. `js` or `md` to the code block to inform Pretty Code what syntax to use for highlighting
+
+# Customize Theme
+
+We can customize the VS Code theme used to highlight our code.
+
+```ts showLineNumbers title="./lib/rehypePrettyCode.ts" {6}
+import { type Options } from "rehype-pretty-code"
+import vercelLightTheme from "./lib/themes/vercel-light.json"
+
+export const rehypePrettyCodeOptions: Partial<Options> = {
+  // use a prepackaged theme
+  theme: "one-dark-pro",
+  // or import a custom theme
+  theme: JSON.parse(vercelLightTheme),
+}
+```
+
+- Create a new file to store our Pretty Code customizations
+- Select a prepackaged theme (6), or import a JSON theme definition (2, 8)
+
+```diff showLineNumbers title="./contentlayer.config.js" {4,12}
+import { makeSource } from "contentlayer/source-files"
+import rehypePrettyCode from "rehype-pretty-code"
+import { Post } from "./content/definitions/Post"
++ import { rehypePrettyCodeOptions } from "./lib/rehypePrettyCode"
+
+export default makeSource({
+  contentDirPath: "content",
+  documentTypes: [Post],
+  mdx: {
+    rehypePlugins: [
+-     rehypePrettyCode
++     [rehypePrettyCode, rehypePrettyCodeOptions]
+    ],
+  },
+})
+```
+
+Thankyou.
