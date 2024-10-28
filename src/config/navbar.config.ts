@@ -10,7 +10,7 @@ export const navbarConfig: NavItem[] = [
     url: "/letters",
   },
   {
-    title: "Series",
+    title: "Posts",
     url: "/posts",
   },
   {

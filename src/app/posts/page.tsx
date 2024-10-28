@@ -5,7 +5,9 @@ import Navbar from "@/components/navbar";
 import PostCard from "@/components/post/post-card";
 
 export default function PostSection() {
-  const sortedPosts = posts.sort((a, b) => {
+  const filteredPosts = posts.filter(post => post.status === "published");
+  
+  const sortedPosts = filteredPosts.sort((a, b) => {
     return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
   });
 
