@@ -5,8 +5,8 @@ import { posts as allPosts } from "#site/content";
 import { PostSeries } from "./post-series"; 
 
 // Type guard to check if the series object is valid
-function isSeries(series: any): series is { title: string; order: number } {
-  return series && typeof series.title === 'string';
+function isSeries(series: any): series is { title: string; posts: Array<{ slug: string; title: string; status: string; isCurrent?: boolean }> } {
+  return series && typeof series.title === 'string' && Array.isArray(series.posts);
 }
 
 export default function SeriesDropdown({
@@ -21,7 +21,7 @@ export default function SeriesDropdown({
   // Group posts by series title
   const seriesList = allPosts.reduce((acc, post) => {
     if (post.series) {
-      const seriesTitle = post.series?.title
+      const seriesTitle = post.series.title;
 
       // Initialize series entry if it doesn't exist
       if (!acc[seriesTitle]) {
@@ -35,7 +35,7 @@ export default function SeriesDropdown({
       acc[seriesTitle].posts.push({
         slug: post.slug,
         title: post.title,
-        status: post.status as "draft" | "published",
+        status: post.status,
         isCurrent: post.slug === currentSlug,
       });
     }
@@ -51,7 +51,7 @@ export default function SeriesDropdown({
   return (
     <>
       {filteredSeriesList.map((seriesData) => (
-        <PostSeries key={seriesData.title} data={seriesData} isInteractive={isInteractive} />
+        <PostSeries key={seriesData.title} seriesData={seriesData} isInteractive={isInteractive} />
       ))}
     </>
   );

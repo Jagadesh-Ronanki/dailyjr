@@ -117,7 +117,7 @@ export const posts = defineCollection({
       description: s.string().max(999).optional(),
       status: s.enum(["draft", "published"]),
       series: Series,
-      tags: Tag,
+      tags: s.array(Tag),
       image: s.image(),
       imageDark: s.image(),
       body: s.mdx(),

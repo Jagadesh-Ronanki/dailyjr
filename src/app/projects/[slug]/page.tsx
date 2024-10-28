@@ -7,6 +7,7 @@ import { IconMap } from "@/components/icon-map";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site.config";
+import SeriesDropdown from "@/components/post/series-dropdown";
 
 type ProjectPageProps = {
   params: {

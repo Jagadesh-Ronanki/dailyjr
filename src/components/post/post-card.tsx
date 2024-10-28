@@ -2,14 +2,13 @@ import { posts } from "#velite";
 import { StepForward } from "lucide-react";
 import Link from "next/link";
 import Picture from "@/components/picture";
-import { IconMap } from "@/components/icon-map";
 import { z } from "velite";
 
 type PostCardProps = {
   post: z.infer<typeof posts.schema>;
 };
 
-export default function postCard({ post }: PostCardProps) {
+export default function PostCard({ post }: PostCardProps) {
   return (
     <div className="flex p-3 justify-between gap-2 rounded-xl border overflow-hidden">
       <div className="space-y-2 w-full tablet:w-3/5">
@@ -32,10 +31,10 @@ export default function postCard({ post }: PostCardProps) {
         <div className="flex items-center gap-2 flex-wrap">
           {Array.isArray(post.tags) && post.tags.map((tag) => (
             <p
-              key={tag}
+              key={tag?.slug}
               className="px-2 py-1 rounded bg-muted text-xs cursor-pointer"
             >
-              {tag}
+              {tag?.title}
             </p>
           ))}
         </div>

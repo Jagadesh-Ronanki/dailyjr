@@ -34,26 +34,20 @@ export async function generateMetadata({
     return {};
   }
 
-  const ogUrl = new URL(${siteConfig.siteUrl}${post.image.src});
+  const ogUrl = new URL(`${siteConfig.siteUrl}${post.image.src}`);
   ogUrl.searchParams.set("heading", post.title);
-  ogUrl.searchParams.set("type", "Post");
+  ogUrl.searchParams.set("type", "Blog Post");
   ogUrl.searchParams.set("mode", "dark");
 
-  const keywords = [
-    ...post?.tags?.filter(tag => typeof tag === 'string') || [],
-    ...siteConfig?.keywords?.filter(keyword => typeof keyword === 'string') || [],
-    post?.title || ''
-  ].filter(Boolean);
-
   return {
-    title: ${post?.title} | ${siteConfig.name} | ${siteConfig.creator.name},
+    title: `${post.title} | ${siteConfig.name} | ${siteConfig.creator.name}`,
     description: post.description,
-    keywords: keywords,
+    keywords: [...post.tags.map((tag) => tag?.title!), ...siteConfig.keywords, post.title],
     openGraph: {
-      title: ${post.title} | ${siteConfig.name} | ${siteConfig.creator.name},
+      title: `${post.title} | ${siteConfig.name} | ${siteConfig.creator.name}`,
       description: post.description,
       type: "article",
-      url: ${siteConfig.siteUrl}/posts/${post.slugAsParams},
+      url: `${siteConfig.siteUrl}/posts/${post.slugAsParams}`,
       images: [
         {
           url: ogUrl.toString(),
@@ -65,7 +59,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: ${post.title} | ${siteConfig.name},
+      title: `${post.title} | ${siteConfig.name}`,
       description: post.description,
       images: [ogUrl.toString()],
     },
@@ -113,9 +107,8 @@ export default function PostPage({ params }: PostPageProps) {
           />
           <h1 className="head-text-sm py-1 mt-6 mb-4">{post.title}</h1>
           <div className="mb-8">
-            {/* ------ links ----------------------------------------- */}
             {/* <div className="flex flex-wrap items-center gap-2 mb-4">
-               {post.links.map((link, i) => (
+              {post.links.map((link, i) => (
                 <a
                   key={i}
                   href={link.url}
@@ -124,36 +117,30 @@ export default function PostPage({ params }: PostPageProps) {
                 >
                   {IconMap[link.name.toLowerCase() as keyof typeof IconMap]}
                   <span className="sr-only">
-                    {${link.name} - ${link.url}}
+                    {`${link.name} - ${link.url}`}
                   </span>
                 </a>
               ))}
             </div> */}
             <div className="flex flex-wrap items-center gap-2">
-              {post.tags.map((tag) => (
-                <p
-                  key={tag?.slug}
-                  className="text-xs p-1 rounded bg-secondary cursor-pointer"
-                >
-                  {tag?.title}
-                </p>
-              ))}
+            {post.tags && post.tags.map((tag) => (
+              <p
+                key={tag?.slug}
+                className="text-xs p-1 rounded bg-secondary cursor-pointer"
+              >
+                {tag?.title}
+              </p>
+            ))}
             </div>
           </div>
           <SeriesDropdown title={post.series?.title} isInteractive={true} currentSlug={post.slugAsParams} />
           <p className="rounded mb-4">{post.description}</p>
-          {/* TODO: Add series block */}
-          {/* {post.series && post.series.posts.length > 1 ? (
-            <PostSeries data={post.series} isInteractive={true} />
-          ) : null} */}
         </div>
-        {/* --- content --- */}
         <div
           id="tab-section"
           className="relative w-full lg:h-full lg:w-3/5 p-2 md:p-8 overflow-y-scroll"
         >
           <MDXContentRenderer code={post.body} />
-          <SeriesDropdown title={post.series?.title} isInteractive={false} currentSlug={post.slugAsParams} />
         </div>
       </div>
     </main>

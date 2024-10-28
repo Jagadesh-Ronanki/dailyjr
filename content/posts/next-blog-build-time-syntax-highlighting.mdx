@@ -3,17 +3,18 @@ title: "Build-Time Syntax Highlighting: Zero Client-Side JS, Support for 100+ La
 description: "Leverage VS Code's ecosystem to generate highly accurate syntax highlighting at build time. With zero performance cost and access to the entire VS Code theme catalog."
 publishedAt: "2022-08-24"
 status: "published"
+tags:
+  - title: "Next.js"
+    slug: "next"
+  - title: "MDX"
+    slug: "mdx"
+image: "../letters/assets/can-you-build-next-multi-billion-dollar-startup/startup.png"
+imageDark: "../letters/assets/can-you-build-next-multi-billion-dollar-startup/startup-dark.png"
 series:
   order: 6
   title: "Build a Developer Blog with Next.js"
 ---
 
-<Grid x="aside">
-  <Aside>
-    Note: This post is not finished. I sometimes publish early in case it will
-    be helpful to someone.
-  </Aside>
-</Grid>
 
 If you're writing about code, your blog probably needs...
 
@@ -146,13 +147,6 @@ export default makeSource({
 
 Let's create a post to preview our progress so far.
 
-<Grid x="aside">
-  <Aside>
-    If you're using VS Code to author your post, you may notice you're code
-    blocks are automatically highlighted when you add the language annotation.
-    Also, Prettier formats them on save. Pretty cool!
-  </Aside>
-</Grid>
 
 ````md showLineNumbers title="./content/posts/syntax-highlighting.mdx" {5-7}
 # Code Block
@@ -446,15 +440,6 @@ export const rehypePrettyCodeOptions: Partial<Options> = {
 ```
 
 Then use CSS to show and hide the light or dark theme depending on the user's selection.
-
-<Grid x="aside">
-  <Aside>
-    Another way to add theme switching involves adding global CSS variables to a
-    page and using a special theme that sets CSS variables instead of hard-coded
-    colors. I like the idea of this approach, but right now the theme only
-    supports a few tokens, making it much less granular than most VSCode themes.
-  </Aside>
-</Grid>
 
 ```css title="./styles/syntax-highlighting.css"
 pre[data-theme="dark"] {
