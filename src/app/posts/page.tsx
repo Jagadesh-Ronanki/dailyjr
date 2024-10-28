@@ -22,7 +22,7 @@ export default function PostSection() {
           <Navbar />
           <div className="w-full space-y-6 mt-5">
             {sortedPosts.map((post) => (
-              <PostCard post={post} />
+              <PostCard key={post?.slug} post={post} />
             ))}
           </div>
         </div>
