@@ -110,7 +110,7 @@ export default async function BlogPost({ params }: BlogPageParams) {
 
       <div className="hidden text-sm min-[1400px]:inline-flex">
         <div className="fixed top-28 right-[100px] h-full z-50">
-          <DashboardTableOfContents toc={blog.toc} />
+          {/*<DashboardTableOfContents toc={blog.toc} />*/}
         </div>
       </div>
       <div className="mx-auto w-full min-w-0">
