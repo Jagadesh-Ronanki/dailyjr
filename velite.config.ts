@@ -6,15 +6,16 @@ import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import { LineElement } from "rehype-pretty-code";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { allTagNames, allTagSlugs } from "@/lib/contentlayer";
 
 const computedFields = <T extends { slug: string }>(data: T) => ({
   ...data,
   slugAsParams: data.slug.split("/").slice(1).join("/"),
 });
 
-export const blogs = defineCollection({
-  name: "Blog",
-  pattern: "blogs/**/*.mdx",
+export const letters = defineCollection({
+  name: "Letters",
+  pattern: "letters/**/*.mdx",
   schema: s
     .object({
       slug: s.path(),
@@ -91,6 +92,37 @@ export const projects = defineCollection({
     .transform(computedFields),
 });
 
+//----------------------
+// Define the Series schema
+const Series = s.object({
+  title: s.string(),
+  order: s.number(),
+}).optional();
+
+// Define the Tag schema
+const Tag = s.object({
+  title: s.enum(allTagNames),
+  slug: s.enum(allTagSlugs),
+}).optional();
+//----------------------
+
+export const posts = defineCollection({
+  name: "Post",
+  pattern: "posts/**/*.mdx",
+  schema: s
+    .object({
+      slug: s.path(),
+      title: s.string(),
+      publishedAt: s.isodate(),
+      description: s.string().max(999).optional(),
+      status: s.enum(["draft", "published"]),
+      series: Series,
+      tags: Tag,
+      body: s.mdx(),
+    })
+    .transform(computedFields),
+});
+
 export default defineConfig({
   root: "content",
   output: {
@@ -100,7 +132,7 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { blogs, authors, pages, tils, projects },
+  collections: { letters, authors, pages, tils, projects, posts },
   mdx: {
     rehypePlugins: [
       rehypeSlug,
