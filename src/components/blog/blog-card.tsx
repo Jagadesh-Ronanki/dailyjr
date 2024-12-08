@@ -14,8 +14,8 @@ export default function BlogCard({
         <Picture
           image={blog.image}
           imageDark={blog.imageDark}
-          width={200}
-          height={111}
+          // width={200}
+          // height={111}
           alt={blog.title}
           className="w-full aspect-[8/5] object-cover"
         />
