@@ -42,7 +42,7 @@ export async function generateMetadata({
   return {
     title: `${post.title} | ${siteConfig.name} | ${siteConfig.creator.name}`,
     description: post.description,
-    keywords: [...post.tags.map((tag) => tag?.title!), ...siteConfig.keywords, post.title],
+    // keywords: [...post.tags.map((tag) => tag?.title!), ...siteConfig.keywords, post.title],
     openGraph: {
       title: `${post.title} | ${siteConfig.name} | ${siteConfig.creator.name}`,
       description: post.description,
@@ -86,7 +86,7 @@ export default function PostPage({ params }: PostPageProps) {
       <div className="w-full h-full rounded-2xl sm:border flex flex-wrap justify-between lg:divide-x">
         <div className="relative w-full lg:w-2/5 p-2 md:p-8 lg:h-full lg:overflow-y-scroll">
           <div className="flex justify-between mb-2">
-            <Link href="/" className="group/back text-xs">
+            <Link href="/posts" className="group/back text-xs">
               <ArrowLeft
                 size={18}
                 className="group-hover/back:-translate-x-1 transition-transform transform-gpu duration-100 ease-in-out"
