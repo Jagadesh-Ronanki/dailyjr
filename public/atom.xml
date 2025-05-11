@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://symmetrical-space-palm-tree-p4r77j5j45vh74pj-3000.app.github.dev</id>
+    <id>https://jagadeshronanki.com</id>
     <title>Letters | jagadeshronanki.com</title>
     <updated>2024-10-25T19:36:14.395Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://symmetrical-space-palm-tree-p4r77j5j45vh74pj-3000.app.github.dev"/>
-    <link rel="self" href="https://symmetrical-space-palm-tree-p4r77j5j45vh74pj-3000.app.github.dev/atom.xml"/>
+    <link rel="alternate" href="https://jagadeshronanki.com"/>
+    <link rel="self" href="https://jagadeshronanki.com/atom.xml"/>
     <subtitle>Hi, I’m Jagadesh Ronanki. I’m nobody, just like you, and I help you recognize that. In a society fixated on status and wealth, I challenge the notion that they hold any real value. I believe that awareness and introspection are the keys to understanding our place in this world. Let's explore the idea that greed and ambition aren't the real threats to humanity, but rather the distractions that keep us from our true selves.</subtitle>
-    <logo>https://symmetrical-space-palm-tree-p4r77j5j45vh74pj-3000.app.github.dev/logo.png</logo>
-    <icon>https://symmetrical-space-palm-tree-p4r77j5j45vh74pj-3000.app.github.dev/favicon.png</icon>
+    <logo>https://jagadeshronanki.com/logo.png</logo>
+    <icon>https://jagadeshronanki.com/favicon.png</icon>
     <rights>All rights reserved 2024, Jagadesh Ronanki</rights>
 </feed>

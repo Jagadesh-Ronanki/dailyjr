@@ -31,7 +31,7 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: [
         'http://localhost',
-        'https://symmetrical-space-palm-tree-p4r77j5j45vh74pj-3000.app.github.dev/'
+        'https://jagadeshronanki.com/'
       ]
     }
   }

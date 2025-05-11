@@ -91,7 +91,7 @@ export default function PostPage({ params }: PostPageProps) {
                 size={18}
                 className="group-hover/back:-translate-x-1 transition-transform transform-gpu duration-100 ease-in-out"
               />
-              <span className="sr-only">rdsx.dev</span>
+              <span className="sr-only">jagadeshronanki.com</span>
             </Link>
             <p className="px-2 py-1 text-xs rounded bg-secondary">
               {new Date(post.publishedAt).toDateString()}
