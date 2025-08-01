@@ -1,24 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Service, calculatorConfig } from "@/config/services.config";
+import { siteConfig } from "@/config/site.config";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Palette, PenTool, Code, TrendingUp, Check } from "lucide-react";
+import { getCalApi } from "@calcom/embed-react";
+import { useTheme } from "next-themes";
 
 interface CostCalculatorProps {
   service: Service;
 }
 
 export default function CostCalculator({ service }: CostCalculatorProps) {
+  const { theme } = useTheme();
+
   const [hours, setHours] = useState({
     design: calculatorConfig.defaultHours.design,
     copywriting: calculatorConfig.defaultHours.copywriting,
     development: calculatorConfig.defaultHours.development,
     seo: calculatorConfig.defaultHours.seo,
   });
+
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: "service-call" });
+      cal("ui", {
+        theme: theme === "dark" ? "dark" : "light",
+        cssVarsPerTheme: {
+          dark: { "--brand-color": "#000000" },
+          light: { "--brand-color": "#ffffff" },
+        },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+    })();
+  }, [theme]);
 
   const serviceTypes = [
     { key: 'design' as const, label: 'Design', icon: Palette },
@@ -175,18 +195,19 @@ export default function CostCalculator({ service }: CostCalculatorProps) {
         </p>
         <div className="flex gap-2 justify-center">
           <a
-            href={`mailto:contact@example.com?subject=Quote Request for ${service.name}&body=Hi, I'm interested in ${service.name}. Based on the calculator, my project estimate is ₹${totalCost.toLocaleString('en-IN')} for ${totalHours} hours. Please provide a detailed quote.`}
+            href={`mailto:${siteConfig.contact.email}?subject=Quote Request for ${service.name}&body=Hi, I'm interested in ${service.name}. Based on the calculator, my project estimate is ₹${totalCost.toLocaleString('en-IN')} for ${totalHours} hours. Please provide a detailed quote.`}
             className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm hover:bg-primary/90 transition-colors"
           >
             Request Quote
           </a>
-          <a
-            href="https://cal.com/your-profile"
-            target="_blank"
+          <button
+            data-cal-namespace="service-call"
+            data-cal-link={siteConfig.contact.cal}
+            data-cal-config='{"layout":"month_view"}'
             className="px-4 py-2 border rounded-md text-sm hover:bg-secondary transition-colors"
           >
             Schedule Call
-          </a>
+          </button>
         </div>
       </div>
     </div>
