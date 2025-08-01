@@ -18,11 +18,15 @@ export const navbarConfig: NavItem[] = [
   //   url: "/academy",
   // },
   {
+    title: "Services",
+    url: "/services",
+  },
+  {
     title: "Experience",
     url: "/experience",
   },
-  {
-    title: "TIL",
-    url: "/til",
-  },
+  // {
+  //   title: "TIL",
+  //   url: "/til",
+  // },
 ];
