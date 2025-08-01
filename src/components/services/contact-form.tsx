@@ -190,9 +190,9 @@ ${formData.name}
           </Button>
 
           <div className="text-xs text-muted-foreground text-center space-y-1">
-            <p>• We&apos;ll respond within 24 hours •</p>
-            <p>• Free consultation and project analysis •</p>
-            <p>• No obligation detailed proposal •</p>
+            <p>- We&apos;ll respond within 24 hours -</p>
+            <p>- Free consultation and project analysis -</p>
+            <p>- No obligation detailed proposal -</p>
           </div>
         </form>
       </CardContent>

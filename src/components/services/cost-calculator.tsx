@@ -117,39 +117,54 @@ export default function CostCalculator({ service }: CostCalculatorProps) {
 
       {/* Total Summary */}
       <Card className="border-primary">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <CardTitle>Project Estimate</CardTitle>
-              <Badge className="bg-primary">Custom Quote</Badge>
-            </div>
-            <div className="flex gap-6 text-sm">
-              <div className="text-right">
-                <div className="text-muted-foreground">Total Hours:</div>
-                <div className="font-semibold">{totalHours} hours</div>
-              </div>
-              <div className="text-right">
-                <div className="text-muted-foreground">Estimated Duration:</div>
-                <div className="font-semibold">
-                  {Math.ceil(totalHours / 8)} working days
-                </div>
-              </div>
-            </div>
+        <CardHeader className="text-center pb-4">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <CardTitle className="text-xl">Project Estimate</CardTitle>
+            <Badge className="bg-primary">Custom Quote</Badge>
           </div>
+          <div className="text-4xl font-bold text-primary">₹{totalCost.toLocaleString('en-IN')}</div>
+          <div className="text-sm text-muted-foreground">Total Project Cost</div>
         </CardHeader>
 
-        <Separator className="w-[95%] mx-auto mb-6"/>
-
-        <CardContent className="space-y-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold">₹{totalCost.toLocaleString('en-IN')}</div>
-            <div className="text-sm text-muted-foreground">Total Project Cost</div>
+        <CardContent className="space-y-6">
+          {/* Project Stats Grid */}
+          <div className="grid grid-cols-2 gap-4 p-4 border rounded-lg bg-secondary dark:bg-primary-foreground">
+            <div className="text-center">
+              <div className="text-2xl font-semibold text-foreground">{totalHours}</div>
+              <div className="text-xs text-muted-foreground">Total Hours</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-semibold text-foreground">{Math.ceil(totalHours / 8)}</div>
+              <div className="text-xs text-muted-foreground">Working Days</div>
+            </div>
           </div>
 
-          <div className="text-xs text-muted-foreground text-center space-y-1">
-            <p>• Prices based on current market rates in India •</p>
-            <p>• Final quote may vary based on specific requirements •</p>
-            <p>• 50% advance payment, 50% on completion •</p>
+          {/* Service Breakdown */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-medium text-center">Cost Breakdown</h4>
+            <div className="space-y-2">
+              {serviceTypes.map(({ key, label, icon: Icon }) => (
+                hours[key] > 0 && (
+                  <div key={key} className="flex items-center justify-between p-2 border rounded">
+                    <div className="flex items-center gap-2">
+                      <Icon size={14} className="text-muted-foreground" />
+                      <span className="text-sm">{label}</span>
+                      <span className="text-xs text-muted-foreground">({hours[key]}h)</span>
+                    </div>
+                    <div className="text-sm font-medium">₹{calculateCost(key).toLocaleString('en-IN')}</div>
+                  </div>
+                )
+              ))}
+            </div>
+          </div>
+
+          {/* Terms */}
+          <div className="text-center p-3 border rounded-lg">
+            <div className="text-xs text-muted-foreground space-y-1">
+              <p>- {Math.ceil(totalHours / 8)} working days -</p>
+              <p>- 50% advance • 50% on completion -</p>
+              <p>- Final quote may vary based on specific requirements -</p>
+            </div>
           </div>
         </CardContent>
       </Card>
