@@ -162,7 +162,7 @@ export default function ServicePackages({ service }: ServicePackagesProps) {
           <div className="text-center space-y-3">
             <h4 className="font-semibold text-primary">Need a Custom Solution?</h4>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              Have unique requirements that don't fit our packages? We create custom solutions tailored to your specific needs and budget.
+              Have unique requirements that don&apos;t fit our packages? We create custom solutions tailored to your specific needs and budget.
             </p>
             <Button 
               variant="outline" 

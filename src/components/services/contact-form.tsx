@@ -104,7 +104,7 @@ ${formData.name}
           Get Started with {service.name}
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          Fill out the form below and we'll get back to you within 24 hours with a detailed proposal.
+          Fill out the form below and we&apos;ll get back to you within 24 hours with a detailed proposal.
         </p>
       </CardHeader>
       <CardContent>
@@ -190,7 +190,7 @@ ${formData.name}
           </Button>
 
           <div className="text-xs text-muted-foreground text-center space-y-1">
-            <p>• We'll respond within 24 hours •</p>
+            <p>• We&apos;ll respond within 24 hours •</p>
             <p>• Free consultation and project analysis •</p>
             <p>• No obligation detailed proposal •</p>
           </div>
