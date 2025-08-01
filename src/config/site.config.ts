@@ -53,6 +53,10 @@ export const siteConfig: Site = {
     url: process.env.NEXT_PUBLIC_SITE_URL || "https://jagadeshronanki.vercel.app",
   },
   ogImage: (process.env.NEXT_PUBLIC_SITE_URL || "https://jagadeshronanki.vercel.app") + "/og.png",
+  contact: {
+    email: "jagadesh.ronanki@gmail.com",
+    cal: "jagadesh.ronanki/meeting",
+  },
   links: {
     x: "https://x.com/jagadeshronanki",
     github: "https://github.com/jagadesh-ronanki",

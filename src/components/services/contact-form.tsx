@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Service } from "@/config/services.config";
+import { siteConfig } from "@/config/site.config";
 
 interface ContactFormProps {
   service: Service;
@@ -63,7 +64,7 @@ Best regards,
 ${formData.name}
     `.trim();
 
-    const mailtoLink = `mailto:contact@jagadeshronanki.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailtoLink = `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
 
     // Simulate form submission
@@ -81,7 +82,7 @@ ${formData.name}
           <h3 className="font-semibold text-green-800 mb-2">Thank you for your interest!</h3>
           <p className="text-sm text-green-700">
             Your email client should have opened with a pre-filled message. 
-            If not, please email us directly at contact@jagadeshronanki.com
+            If not, please email us directly at {siteConfig.contact.email}
           </p>
           <Button 
             variant="outline" 

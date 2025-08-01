@@ -13,6 +13,10 @@ export type Site = {
     x: string;
     github: string;
   };
+  contact: {
+    email: string;
+    cal: string;
+  };
 };
 
 export type Portfolio = {
