@@ -37,7 +37,7 @@ export default function TestimonialSlider() {
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold mb-2">Our Recent Work</h3>
         <p className="text-muted-foreground">
-          Explore some of the projects we've delivered for our clients
+          Explore some of the projects we&apos;ve delivered for our clients
         </p>
       </div>
       
@@ -91,7 +91,7 @@ export default function TestimonialSlider() {
               <Card className="w-80 p-4">
                 <CardContent className="p-0 h-full flex flex-col justify-between">
                   <p className="text-sm text-muted-foreground italic mb-3">
-                    "{testimonial.testimonial}"
+                    &ldquo;{testimonial.testimonial}&rdquo;
                   </p>
                   <div>
                     <p className="font-medium text-sm">{testimonial.client}</p>
