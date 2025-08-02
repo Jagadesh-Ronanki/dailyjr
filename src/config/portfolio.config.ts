@@ -4,7 +4,7 @@ export const portfolioConfig: Portfolio = {
   name: "Jagadesh Ronanki",
   tagline: "Status ∙ Wealth ∙ Awareness ∙ Greed",
   resume:
-    "https://drive.google.com/file/d/1FEjzYpGBvVhllsWWMquCa9rMckClRPAQ/view",
+    "https://drive.google.com/file/d/1_8WilNXeAkKIu5pem5S4xeYD8xK4PJax/view",
   links: {
     github: "https://github.com/jagadesh-ronanki",
     twitter: "https://x.com/jagadeshronanki",
