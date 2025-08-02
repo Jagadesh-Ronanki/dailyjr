@@ -5,6 +5,7 @@ import { servicesConfig } from "@/config/services.config";
 import ServiceDropdown from "./service-dropdown";
 import CostCalculator from "./cost-calculator";
 import ServicePackages from "./service-packages";
+import TestimonialSlider from "./testimonial-slider";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 
@@ -70,6 +71,11 @@ export default function ServicesContent() {
           </div>
         </div>
       </div>
+
+      <Separator />
+
+      {/* Recent Work / Testimonials */}
+      <TestimonialSlider />
 
       <Separator />
 
